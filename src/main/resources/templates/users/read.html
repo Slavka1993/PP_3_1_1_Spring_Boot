@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Read</title>
+</head>
+<form action="/users/read" method="get">
+    <label for="id">ID user:</label>
+    <input type="text" id="id" name="id" required>
+
+    <button type="submit">Find</button>
+</form>
+
+<div th:if="${user != null}">
+    <h2>Info by user</h2>
+    <p>ID: <span th:text="${user.id}"></span></p>
+    <p>Имя: <span th:text="${user.name}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+</div>
+
+<div th:if="${user == null}">
+    <p>User not found</p>
+</div>
