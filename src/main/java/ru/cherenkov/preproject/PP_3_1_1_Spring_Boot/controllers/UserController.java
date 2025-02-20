@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.dao.UserDao;
 import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.model.User;
+import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.service.UserService;
 
 import java.util.List;
 
@@ -15,11 +16,12 @@ import java.util.List;
 @RequestMapping("/")
 public class UserController {
 
-    private UserDao userDao;
+    private UserService userService;
+
 
     @Autowired
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -29,7 +31,7 @@ public class UserController {
 
     @GetMapping("users")
     public String getAllUsers(Model model) {
-        List<User> users = userDao.getAllUsers();
+        List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "index";
     }
@@ -42,13 +44,13 @@ public class UserController {
 
     @PostMapping("/users")
     public String create(@ModelAttribute("user") User user) {
-        userDao.saveUser(user);
+        userService.saveUser(user);
         return "redirect:/users";
     }
 
     @PostMapping("/users/delete")
     public String update(@RequestParam("id") Long id) {
-        userDao.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/users";
     }
 
@@ -57,7 +59,7 @@ public class UserController {
         if (id == null) {
             return "users/read";
         }
-        User user = userDao.getUserById(id);
+        User user = userService.getUserById(id);
         if (user == null) {
             model.addAttribute("message", "User not found " + id);
         } else {
@@ -68,14 +70,14 @@ public class UserController {
 
     @GetMapping("users/edit")
     public String editUser(@RequestParam("id") Long id, Model model) {
-        User user = userDao.getUserById(id);
+        User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "users/edit";
     }
 
     @PostMapping("/users/update")
     public String updateUser(@ModelAttribute("user") User user) {
-        userDao.updateUser(user);
+        userService.updateUser(user);
         return "redirect:/users";
     }
 
