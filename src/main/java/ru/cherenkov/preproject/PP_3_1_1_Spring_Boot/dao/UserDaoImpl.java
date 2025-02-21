@@ -2,7 +2,6 @@ package ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.model.User;
 
