@@ -6,7 +6,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.model.User;
 
-
 import java.util.List;
 
 @Repository

@@ -1,23 +1,19 @@
 package ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.dao.UserDao;
 import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.model.User;
 import ru.cherenkov.preproject.PP_3_1_1_Spring_Boot.service.UserService;
 
 import java.util.List;
-
 
 @Controller
 @RequestMapping("/")
 public class UserController {
 
     private UserService userService;
-
 
     @Autowired
     public UserController(UserService userService) {
@@ -43,8 +39,14 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public String create(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+    public String create(@ModelAttribute("user") User user,
+                         @RequestParam(name = "сancel", required = false) String cancel) {
+        if (cancel != null) {
+            return "redirect:/users";
+        }
+        if (user.getName() == null && !user.getName().isEmpty()) {
+            userService.saveUser(user);
+        }
         return "redirect:/users";
     }
 
@@ -80,6 +82,4 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/users";
     }
-
-
 }
